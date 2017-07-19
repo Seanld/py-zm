@@ -19,6 +19,14 @@ class Interpreter (object):
 	def write(self, text):
 		self.abstracted += text
 		
+	def convertVars(self, string): # Looks through string and converts any variable reference to it's value as a string as well.
+		converted = string
+		VARIABLE_NAMES = self.VARIABLES.keys()
+		for name in VARIABLE_NAMES:
+			if "@"+name in converted:
+				converted = converted.replace("@"+name, str(self.VARIABLES[name]))
+		return converted
+		
 	def execute(self, line, function=False):
 		global individuals
 		individuals = None
@@ -31,16 +39,16 @@ class Interpreter (object):
 			global blocked
 			blocked = line.split(" ")
 		action = blocked[0]
-		if individuals is not None:
+		if individuals is not None: ##### PARSE FUNCTION CODE #####
 			blockedsindex = 0
 			for subline in individuals:
 				blocked = blockeds[blockedsindex]
 				action = blocked[0]
-				if "*" in action[0] and ":" == action[-1]: # Is a built-in function call
+				if "*" in action[0] and ":" == action[1]: # Is a built-in function call
 					pass
 				elif "*" == action[0]: # Is a built-in variable call
 					pass
-				elif ":" == action[-1]: # Is a user-defined function call
+				elif ":" == action[0]: # Is a user-defined function call (not yet nestable in functions)
 					pass
 				else: # Check for keyword
 					if action == "set": # Create a new variable
@@ -62,10 +70,17 @@ class Interpreter (object):
 							else: # Otherwise just get last block for simplicity
 								value = literal_type(blocked[4])
 							self.VARIABLES[name] = value
+							
 					elif action == "make": # Create a new function
 						pass
+						
+					elif action == "print:": # Print statement
+						trail_width = 7
+						toPrint = self.convertVars(subline[trail_width:])
+						print(toPrint)
+				
 				blockedsindex += 1
-		elif individuals is None:
+		elif individuals is None: ##### PARSE NORMAL LINE #####
 			if "*" in action[0] and ":" == action[1]: # Is a built-in function call
 				pass
 			elif "*" == action[0]: # Is a built-in variable call
@@ -88,14 +103,20 @@ class Interpreter (object):
 							trail_width = 8+len(blocked[1])+len(name)
 							afterwards = line[trail_width:]
 							if literal_type == list:
-								value = afterwards.split(", ")
+								value = self.convertVars(afterwards).split(", ")
 							elif literal_type == str:
-								value = afterwards
+								value = self.convertVars(afterwards)
 						else: # Otherwise just get last block for simplicity
-							value = literal_type(blocked[4])
+							value = literal_type(self.convertVars(blocked[4]))
 						self.VARIABLES[name] = value
+						
 				elif action == "make": # Create a new function
 					pass
+					
+				elif action == "print:":
+					trail_width = 7
+					toPrint = self.convertVars(line[trail_width:])
+					print(toPrint)
 		
 	def parse(self):
 		for line in self.plain.splitlines(): # iterate lines

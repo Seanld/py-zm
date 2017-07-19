@@ -1,0 +1,9 @@
+// A test to reference variable values in other variable values
+
+set str name = Spee Doe
+set str welcomeMessage = Welcome, @name
+set str listOfNames = John Doe, Ron Hoe, @name
+
+set void printStuff: print: Welcome, @name!
+
+:printStuff
