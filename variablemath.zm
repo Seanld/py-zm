@@ -1,0 +1,16 @@
+// This is just a demonstration of Z- programs
+
+set int randomInteger = 42
+set flt randomFloat = 23.90324
+set str aName = John Doe
+set arr someNames = John Doe, Williams McKinley, Harley Davidson
+
+// ^ This are all the currently supported literal types as of v0.2
+
+// Set some new FUNCTIONS!!!
+
+set void threehi: set int ageOfKenny = 15; set int ageOfBraden = 15
+
+:threehi
+
+// This should result in more variables being defined in the `self.VARIABLES` dictionary after the function is called.
