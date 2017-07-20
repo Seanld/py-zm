@@ -1,0 +1,6 @@
+SHORT_NAME=py-zm
+LONG_NAME=Python Z-
+DESCRIPTION=An interpreter for Z-, written completely in Python.
+VERSION=0.4
+CATEGORIES=interpreter,parser,programming,language,programming-language,procedural,python,python3,python3.x
+LATTE_PACKAGE=installers/py-zm.tar.gz
