@@ -1,0 +1,2 @@
+set getAndSay: read name: What is your name: ; print: @name
+:getAndSay
