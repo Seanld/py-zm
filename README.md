@@ -25,3 +25,8 @@ If you know what `ply` is, you know it's confusing as heck, and that the syntax 
 ## Contributions
 
 In advance, I thank all contributers for the work they will provide in building this language up. It needs more creative minds to be great!
+
+# DEPRECATION NOTICE
+
+As of July 20th of 2017, Z- and it's respective compiler `py-zm` are no longer receiving updates. I am moving on to a better project (in fact, a successor to Z- that will be way better), and I won't have the time or the patience to work on this inferior language while also working on it's big brother.
+
